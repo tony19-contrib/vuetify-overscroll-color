@@ -24,3 +24,5 @@ The overscroll color (the background color of the window seen when overscrolling
       }
     }
     ```
+
+![screencast](screencast.gif)
