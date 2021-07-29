@@ -1,24 +1,26 @@
-# vue2-vuetify-tmp1
+> Demonstrates setting oversscroll color to match Vuetify theme
 
-## Project setup
-```
-yarn install
-```
+https://stackoverflow.com/q/68533379/6277151
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+The overscroll color (the background color of the window seen when overscrolling the main window) is set by the `<body>`'s background color. To match the current Vuetify theme, use a watcher on `$vuetify.theme.isDark` that sets the body's background color to match:
 
-### Compiles and minifies for production
-```
-yarn build
-```
+1. Add a template ref to the v-app component (named "app"):
 
-### Lints and fixes files
-```
-yarn lint
-```
+    ```html
+    <v-app ref="app">
+    ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+2. Add a watcher on Vuetify's $vuetify.theme.isDark property that copies the v-app's background color to the body:
+
+    ```js
+    export default {
+      watch: {
+        '$vuetify.theme.isDark'() {
+          this.$nextTick(() => {
+            const rootStyles = window.getComputedStyle(this.$refs.app.$el)
+            document.body.style.backgroundColor = rootStyles.backgroundColor
+          })
+        }
+      }
+    }
+    ```
